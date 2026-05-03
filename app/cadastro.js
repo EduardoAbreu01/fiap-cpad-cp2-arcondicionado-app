@@ -17,6 +17,9 @@ export default function Cadastro() {
     
     const [salasSelecionadas, setSalasSelecionadas] = useState([]);
 
+    const [erro, setErro] = useState(""); 
+    const [carregando, setCarregando] = useState(false); 
+
     const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     const toggleSala = (idSala) => {
@@ -30,26 +33,29 @@ export default function Cadastro() {
     const handleSubmit = async () => {
 
 
-        if (!nome || !email) {
-            Alert.alert('Atenção', 'Preencha todos os campos.');
+        if (!nome || !email || !senha || !confirmaSenha) {
+            setErro('Preencha todos os campos obrigatórios.'); 
             return;
         }
         if(!regexEmail.test(email.trim())){
-            Alert.alert("Erro", "Email inválido!");
+            setErro("E-mail inválido!");
             return;
         }
         if (senha.length < 6) {
-            Alert.alert("Erro", "A senha deve conter no mínimo 6 caracteres")
+            setErro("A senha deve conter no mínimo 6 caracteres.");
             return;
         }
         if (senha !== confirmaSenha) {
-            Alert.alert('Erro', 'As senhas não coincidem!');
+            setErro('As senhas não coincidem!');
             return;
         }
         if (salasSelecionadas.length === 0) {
-            Alert.alert('Atenção', 'Selecione pelo menos uma sala.');
+            setErro('Selecione pelo menos uma sala.');
             return;
         }
+
+        setErro(''); 
+        setCarregando(true); 
 
         try {
             await AsyncStorage.setItem("nome", nome);
@@ -72,6 +78,8 @@ export default function Cadastro() {
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
             <Text style={styles.title}>Criar Conta</Text>
+
+            {erro ? <Text style={styles.errorText}>{erro}</Text> : null}
 
             <TextInput
                 style={styles.input}

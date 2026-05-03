@@ -5,11 +5,9 @@ export default function RootLayout() {
   return (
     <UserProvider>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="cadastro" options={{ title: 'Criar Conta' }} />
-
-        <Stack.Screen name="login" options={{ title: 'Login' }} />
-            
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="cadastro" />
+        <Stack.Screen name="login" />
+        <Stack.Screen name="(tabs)" />
       </Stack>
     </UserProvider>
   );
