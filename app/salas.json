@@ -1,0 +1,17 @@
+[
+  {
+    "id": "0",
+    "nome": "Sala 101",
+    "temperatura": 23.9
+  },
+  {
+    "id": "1",
+    "nome": "Sala 102",
+    "temperatura": 25.5
+  },
+  {
+    "id": "2",
+    "nome": "Sala 405",
+    "temperatura": 23.5
+  }
+]
