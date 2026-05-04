@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useUser } from '../context/UserContext';
 
-export default function login(){
+export default function Login(){
     const [email,setEmail] = useState("");
     const [senha,setSenha] = useState("");
 
@@ -20,25 +20,25 @@ export default function login(){
             return;
         }
 
-            const nomeCadastrado = await AsyncStorage.getItem("nome");
-            const emailCadastrado = await AsyncStorage.getItem("email");
-            const senhaCadastrada = await AsyncStorage.getItem("senha");
-            
-            if(email.trim() != emailCadastrado || senha.trim() != senhaCadastrada){
-                Alert.alert('Erro','Usuário não cadastrado')
-                return;
-            }
-            else {
-                const dadosUsuario = { nome: nomeCadastrado, email: emailCadastrado };
-                
-                setUser(dadosUsuario);
-                
-                await AsyncStorage.setItem("usuario_logado", JSON.stringify(dadosUsuario));
+        const nomeCadastrado = await AsyncStorage.getItem("nome");
+        const emailCadastrado = await AsyncStorage.getItem("email");
+        const senhaCadastrada = await AsyncStorage.getItem("senha");
 
-                Alert.alert('Sucesso', 'Login realizado com sucesso!');
-                router.replace('/(tabs)');
-            }
+        const emailDigitado = email.trim().toLowerCase();
+        const emailSalvo = (emailCadastrado || "").toLowerCase();
 
+        if(emailDigitado !== emailSalvo || senha !== senhaCadastrada){
+            Alert.alert('Erro','E-mail ou senha incorretos.');
+            return;
+        }
+
+        const dadosUsuario = { nome: nomeCadastrado, email: emailCadastrado };
+
+        setUser(dadosUsuario);
+
+        await AsyncStorage.setItem("usuario_logado", JSON.stringify(dadosUsuario));
+
+        router.replace('/(tabs)');
     };
 
 

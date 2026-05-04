@@ -31,7 +31,7 @@ export default function Perfil() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>OlÃ¡, {user.nome}</Text>
+      <Text style={styles.text}>Olá, {user.nome}</Text>
       <Text style={styles.subText}>{user.email}</Text>
 
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>

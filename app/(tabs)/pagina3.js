@@ -27,10 +27,16 @@ export default function MeuFormulario() {
       return;
     }
 
+    const novaTemp = parseFloat(temp.replace(',', '.'));
+    if (isNaN(novaTemp) || novaTemp < 16 || novaTemp > 30) {
+      Alert.alert('Erro', 'Informe uma temperatura entre 16°C e 30°C.');
+      return;
+    }
+
     try {
       const salasAtualizadas = minhasSalas.map(sala => {
         if (sala.id === salaSelecionadaId) {
-          return { ...sala, temperatura: parseFloat(temp) }; // Sobrescreve a temperatura
+          return { ...sala, temperatura: novaTemp };
         }
         return sala;
       });
@@ -40,7 +46,7 @@ export default function MeuFormulario() {
       setMinhasSalas(salasAtualizadas);
       
       const salaNome = minhasSalas.find(s => s.id === salaSelecionadaId)?.nome;
-      Alert.alert('Sucesso! Chamado Aberto', `Sala: ${salaNome} \nNova Temperatura: ${temp}°C`);
+      Alert.alert('Sucesso! Chamado Aberto', `Sala: ${salaNome} \nNova Temperatura: ${novaTemp}°C`);
       
       // Limpa os campos após o envio
       setTemperatura('');

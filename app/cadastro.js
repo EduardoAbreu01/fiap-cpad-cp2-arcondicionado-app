@@ -71,8 +71,15 @@ export default function Cadastro() {
             return;
         }
         
+        setNome("");
+        setEmail("");
+        setSenha("");
+        setConfirmaSenha("");
+        setSalasSelecionadas([]);
+        setCarregando(false);
+
         Alert.alert('Sucesso', 'Cadastro Realizado com sucesso!');
-        router.push('login')
+        router.push('/login');
     };
 
     return (

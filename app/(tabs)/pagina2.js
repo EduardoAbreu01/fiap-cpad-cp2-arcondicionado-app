@@ -63,7 +63,7 @@ export default function Pagina2() {
         </Text>
       </View>
 
-      <TouchableOpacity style={styles.botao} onPress={() => router.push("pagina3")}>
+      <TouchableOpacity style={styles.botao} onPress={() => router.push("/pagina3")}>
         <Text style={styles.botaoTexto}>Abrir chamado</Text>
       </TouchableOpacity>
     </View>
@@ -72,15 +72,11 @@ export default function Pagina2() {
 
 const styles = StyleSheet.create({
   // Mantive as suas cores originais da pagina2.js
-  container: { 
-    flex: 1, 
-    alignItems: 'center', 
+  container: {
+    flex: 1,
+    alignItems: 'center',
     backgroundColor: '#262626',
     padding: 30
-  },
-  texto: { 
-    fontSize: 36, 
-    marginBottom: 30 
   },
   listaContainer: {
     width: '80%',
