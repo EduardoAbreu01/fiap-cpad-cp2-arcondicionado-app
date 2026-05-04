@@ -68,7 +68,7 @@ Este app foi desenvolvido para centralizar e agilizar a comunicação com o Help
              
              npx expo install @react-native-picker/picker
       
-      -Instalando biblioteca para persistir dados
+      - Instalando biblioteca para persistir dados
 
              npx expo install @react-native-async-storage/async-storage
 
