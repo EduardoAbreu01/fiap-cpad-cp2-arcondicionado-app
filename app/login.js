@@ -28,14 +28,16 @@ export default function login(){
                 Alert.alert('Erro','Usuário não cadastrado')
                 return;
             }
-            else{
-                setUser({nome: nomeCadastrado, email: emailCadastrado});
+            else {
+                const dadosUsuario = { nome: nomeCadastrado, email: emailCadastrado };
+                
+                setUser(dadosUsuario);
+                
+                await AsyncStorage.setItem("usuario_logado", JSON.stringify(dadosUsuario));
 
                 Alert.alert('Sucesso', 'Login realizado com sucesso!');
-
                 router.replace('/(tabs)');
             }
-
 
     };
 

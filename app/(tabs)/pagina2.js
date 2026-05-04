@@ -32,7 +32,6 @@ export default function Pagina2() {
     }, [])
   );
 
-  // Procura na lista a sala que tem o ID selecionado no Picker para pegar a temperatura dela
   const salaAtual = minhasSalas.find(s => s.id === salaSelecionadaId);
   const temperaturaExibicao = salaAtual ? salaAtual.temperatura : "--";
 
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
   container: { 
     flex: 1, 
     alignItems: 'center', 
-    backgroundColor: '#000',
+    backgroundColor: '#262626',
     padding: 30
   },
   texto: { 
