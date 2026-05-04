@@ -5,8 +5,8 @@ export default function RootLayout() {
   return (
     <UserProvider>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="cadastro" />
         <Stack.Screen name="login" />
+        <Stack.Screen name="cadastro" />
         <Stack.Screen name="(tabs)" />
       </Stack>
     </UserProvider>

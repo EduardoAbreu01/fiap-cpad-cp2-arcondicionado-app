@@ -135,6 +135,12 @@ export default function Cadastro() {
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                 <Text style={styles.buttonText}>Cadastrar</Text>
             </TouchableOpacity>
+            <TouchableOpacity 
+                            style={styles.linkButton} 
+                            onPress={() => router.push('/login')}
+                        >
+                            <Text style={styles.linkText}>Voltar ao Login</Text>
+            </TouchableOpacity>
         </ScrollView>
     );
 }
@@ -208,5 +214,15 @@ const styles = StyleSheet.create({
     },
     chipTextSelected: {
         color: '#FFFFFF',
+    },
+    linkButton: {
+        marginTop: 24,
+        alignItems: 'center',
+    },
+    linkText: {
+        color: '#888',
+        fontSize: 14,
+        fontWeight: '500',
+        textDecorationLine: 'underline',
     },
 });
