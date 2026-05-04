@@ -73,25 +73,25 @@ Este app foi desenvolvido para centralizar e agilizar a comunicação com o Help
 
    1. O projeto utiliza a estrutura do Expo Router, onde a organização das pastas dita a navegação:
       
-        *app/: Pasta raiz da navegação. Contém o arquivo _layout.js (Root Layout) que configura a pilha de telas (Stack).
-        *app/(tabs)/: Grupo de rotas protegidas que utiliza navegação por abas. Inclui a tela de Perfil.
-        *context/: Pasta destinada ao gerenciamento de estado global, contendo o UserContext.js.
-        *Arquivos de Tela:login.js e cadastro.js gerenciam o acesso inicial e criação de contas.
-        *Home.js fornece a visão geral e informações do projeto.
-        *Dados: Utiliza um arquivo salas.json para armazenar informações estáticas sobre as salas disponíveis.
+    *app/: Pasta raiz da navegação. Contém o arquivo _layout.js (Root Layout) que configura a pilha de telas (Stack).
+    *app/(tabs)/: Grupo de rotas protegidas que utiliza navegação por abas. Inclui a tela de Perfil.
+    *context/: Pasta destinada ao gerenciamento de estado global, contendo o UserContext.js.
+    *Arquivos de Tela:login.js e cadastro.js gerenciam o acesso inicial e criação de contas.
+    *Home.js fornece a visão geral e informações do projeto.
+    *Dados: Utiliza um arquivo salas.json para armazenar informações estáticas sobre as salas disponíveis.
 
-  2. Contexts Criados e Gerenciamento
+  3. Contexts Criados e Gerenciamento
      
-         Foi criado o UserContext, gerenciado através do componente UserProvider.
-         Responsabilidade: Ele armazena e distribui os dados do usuário logado (nome e e-mail) para toda a aplicação.
-         Hook: Utiliza o hook customizado useUser() para permitir que telas como Login e Perfil acessem ou modifiquem o estado do usuário.
+     *Foi criado o UserContext, gerenciado através do componente UserProvider.
+     *Responsabilidade: Ele armazena e distribui os dados do usuário logado (nome e e-mail) para toda a aplicação.
+     *Hook: Utiliza o hook customizado useUser() para permitir que telas como Login e Perfil acessem ou modifiquem o estado do usuário.
 
-  3. Implementação da AutenticaçãoA autenticação é feita de forma local, comparando os dados inseridos com os dados previamente salvos:
+  4. Implementação da AutenticaçãoA autenticação é feita de forma local, comparando os dados inseridos com os dados previamente salvos:
      
      Cadastro: O usuário insere nome, e-mail, senha e seleciona as salas. Esses dados são validados e persistidos no dispositivo.
      Login: A função verificaLogin busca os valores de "nome", "email" e "senha" salvos no armazenamento local. Se os dados digitados coincidirem com os cadastrados, o estado global do usuário é atualizado via setUser e ele é redirecionado para a área principal (/(tabs)).
 
-  4. Utilização do AsyncStorage
+  5. Utilização do AsyncStorage
      
     O AsyncStorage é utilizado para persistir os dados do usuário de forma local com as seguintes chaves:
            nome: Armazena o nome do usuário cadastrado.
