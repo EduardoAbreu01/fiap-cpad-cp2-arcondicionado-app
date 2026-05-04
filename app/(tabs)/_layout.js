@@ -35,13 +35,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="pagina4"
+        name="pagina5"
         options={{
-          title: 'Perfil',
+          title: 'Sair',
           headerStyle: { backgroundColor: '#262626' },
           headerTintColor: '#E83D84',
           tabBarStyle: { backgroundColor: '#262626' },
-          tabBarIcon: ({ color }) => <Ionicons name="person" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <Ionicons name="log-out-outline" size={24} color={color} />,
         }}
       />
     </Tabs>

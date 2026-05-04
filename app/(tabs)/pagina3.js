@@ -1,49 +1,105 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, Alert } from 'react-native';
- 
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, Text, StyleSheet, Alert, TouchableOpacity, ScrollView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function MeuFormulario() {
-  const [sala, setSala] = useState('');
+  const [minhasSalas, setMinhasSalas] = useState([]);
+  const [salaSelecionadaId, setSalaSelecionadaId] = useState(null);
   const [temp, setTemperatura] = useState('');
- 
-  const handleSubmit = () => {
-    if (sala === '' || temp === '') {
-      Alert.alert('Erro', 'Por favor, preencha todos os campos!');
+
+  useEffect(() => {
+    const carregarSalas = async () => {
+      try {
+        const salasSalvas = await AsyncStorage.getItem("salas");
+        if (salasSalvas) {
+          setMinhasSalas(JSON.parse(salasSalvas));
+        }
+      } catch (error) {
+        console.error("Erro ao carregar salas", error);
+      }
+    };
+    carregarSalas();
+  }, []);
+
+  const handleSubmit = async () => {
+    if (!salaSelecionadaId || temp === '') {
+      Alert.alert('Erro', 'Por favor, selecione uma sala e digite a temperatura!');
       return;
     }
-    Alert.alert('Sucesso! Chamado Aberto', `Sala: ${sala} \nTemperatura: ${temp}`);
+
+    try {
+      const salasAtualizadas = minhasSalas.map(sala => {
+        if (sala.id === salaSelecionadaId) {
+          return { ...sala, temperatura: parseFloat(temp) }; // Sobrescreve a temperatura
+        }
+        return sala;
+      });
+
+      await AsyncStorage.setItem("salas", JSON.stringify(salasAtualizadas));
+
+      setMinhasSalas(salasAtualizadas);
+      
+      const salaNome = minhasSalas.find(s => s.id === salaSelecionadaId)?.nome;
+      Alert.alert('Sucesso! Chamado Aberto', `Sala: ${salaNome} \nNova Temperatura: ${temp}°C`);
+      
+      // Limpa os campos após o envio
+      setTemperatura('');
+      setSalaSelecionadaId(null);
+
+    } catch (error) {
+      Alert.alert('Erro', 'Falha ao atualizar a temperatura da sala.');
+    }
   };
- 
+
   return (
-<View style={styles.container}>
-<Text style={styles.titulo}>Chamado</Text>
-<TextInput
+    <ScrollView style={styles.container}>
+      <Text style={styles.titulo}>Chamado</Text>
+
+      <Text style={styles.label}>Selecione a Sala:</Text>
+      
+      <View style={styles.chipsContainer}>
+        {minhasSalas.length > 0 ? (
+          minhasSalas.map((sala) => {
+            const isSelected = salaSelecionadaId === sala.id;
+            return (
+              <TouchableOpacity
+                key={sala.id}
+                style={[styles.chip, isSelected && styles.chipSelected]}
+                onPress={() => setSalaSelecionadaId(sala.id)}
+              >
+                <Text style={[styles.chipText, isSelected && styles.chipTextSelected]}>
+                  {sala.nome} ({sala.temperatura}°C)
+                </Text>
+              </TouchableOpacity>
+            );
+          })
+        ) : (
+          <Text style={{ color: '#888' }}>Nenhuma sala cadastrada.</Text>
+        )}
+      </View>
+
+      <Text style={styles.label}>Nova Temperatura:</Text>
+      <TextInput
         style={styles.input}
-        placeholder="Digite a Sala"
-        value={sala}
-        placeholderTextColor="#aaa"
-        onChangeText={setSala}  
-        autoCapitalize="none" 
-      />
- 
-<TextInput
-        style={styles.input}
-        placeholder="Digite a Temperatura"
+        placeholder="Ex: 22"
         placeholderTextColor="#aaa"
         value={temp}
         onChangeText={setTemperatura}
+        keyboardType="numeric"
       />
- 
-      {}
-<Button title="Enviar" onPress={handleSubmit} />
-</View>
+
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>Enviar Chamado</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 }
- 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#000',
+    backgroundColor: '#262626',
   },
   titulo: {
     fontSize: 24,
@@ -51,15 +107,58 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
     color: '#E83D84'
-    
+  },
+  label: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    marginBottom: 12,
+    marginTop: 8,
+    fontWeight: 'bold',
   },
   input: {
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
+    backgroundColor: '#404040',
+    color: '#BF3B5E',
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     borderRadius: 8,
-    paddingHorizontal: 15,
-    marginBottom: 15,
-    color:'#fff'
+    marginBottom: 16,
+    fontSize: 16,
+  },
+  chipsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 16,
+  },
+  chip: {
+    backgroundColor: '#404040',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  chipSelected: {
+    backgroundColor: '#F23064',
+  },
+  chipText: {
+    color: '#888',
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  chipTextSelected: {
+    color: '#FFFFFF',
+  },
+  button: {
+    backgroundColor: '#F23064',
+    paddingVertical: 16,
+    borderRadius: 8,
+    marginTop: 16,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
