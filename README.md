@@ -80,25 +80,25 @@ Este app foi desenvolvido para centralizar e agilizar a comunicação com o Help
     *Home.js fornece a visão geral e informações do projeto.
     *Dados: Utiliza um arquivo salas.json para armazenar informações estáticas sobre as salas disponíveis.
 
-  3. Contexts Criados e Gerenciamento
+  2. Contexts Criados e Gerenciamento
      
      *Foi criado o UserContext, gerenciado através do componente UserProvider.
      *Responsabilidade: Ele armazena e distribui os dados do usuário logado (nome e e-mail) para toda a aplicação.
      *Hook: Utiliza o hook customizado useUser() para permitir que telas como Login e Perfil acessem ou modifiquem o estado do usuário.
 
-  4. Implementação da AutenticaçãoA autenticação é feita de forma local, comparando os dados inseridos com os dados previamente salvos:
+  3. Implementação da AutenticaçãoA autenticação é feita de forma local, comparando os dados inseridos com os dados previamente salvos:
      
      Cadastro: O usuário insere nome, e-mail, senha e seleciona as salas. Esses dados são validados e persistidos no dispositivo.
      Login: A função verificaLogin busca os valores de "nome", "email" e "senha" salvos no armazenamento local. Se os dados digitados coincidirem com os cadastrados, o estado global do usuário é atualizado via setUser e ele é redirecionado para a área principal (/(tabs)).
 
-  5. Utilização do AsyncStorage
+  4. Utilização do AsyncStorage
      
     O AsyncStorage é utilizado para persistir os dados do usuário de forma local com as seguintes chaves:
-           nome: Armazena o nome do usuário cadastrado.
-           email: Armazena o e-mail do usuário.
-           senha: Armazena a senha definida no cadastro.
-           salas: Armazena um objeto JSON stringificado contendo a lista das salas selecionadas pelo usuário no cadastro.
-           usuario_logado: Chave removida durante o processo de logout para encerrar a sessão.
+    nome: Armazena o nome do usuário cadastrado.
+    email: Armazena o e-mail do usuário.
+    senha: Armazena a senha definida no cadastro.
+    salas: Armazena um objeto JSON stringificado contendo a lista das salas selecionadas pelo usuário no cadastro.
+    usuario_logado: Chave removida durante o processo de logout para encerrar a sessão.
         
    5. Navegação Protegida
        
@@ -118,8 +118,10 @@ Este app foi desenvolvido para centralizar e agilizar a comunicação com o Help
            *Integração com o UserContext para manter a personalização ativa durante toda a navegação.
 
    ## Melhorias Futuras
-      Autenticação por API: Migrar o sistema de login e cadastro do armazenamento local (AsyncStorage) para um backend real, garantindo maior segurança dos dados e permitindo o acesso à mesma conta em diferentes dispositivos.
-      Painel Administrativo para o Help Center: Desenvolver uma interface específica para a equipe de manutenção receber e gerenciar os chamados de temperatura abertos pelos alunos, permitindo alterar o status da solicitação (ex: "Em atendimento", "Concluído").
+      Autenticação por API: Migrar o sistema de login e cadastro do armazenamento local (AsyncStorage) para um backend real, 
+      garantindo maior segurança dos dados e permitindo o acesso à mesma conta em diferentes dispositivos.
+      Painel Administrativo para o Help Center: Desenvolver uma interface específica para a equipe de manutenção receber e 
+      gerenciar os chamados de temperatura abertos pelos alunos, permitindo alterar o status da solicitação (ex: "Em atendimento", "Concluído").
 
 ![Image](https://github.com/user-attachments/assets/b1644e92-8499-4102-9294-6ad7b820206c)
             
